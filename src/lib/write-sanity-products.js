@@ -1,11 +1,11 @@
 import fs from "fs";
 
-import shopify from "./data/products.json";
+import { products } from "./import/shopify-products.json";
 
 const sanityProducts = [];
 const excludedHandles = [];
 
-shopify.products.forEach((product, productIndex) => {
+products.forEach((product, productIndex) => {
   if (excludedHandles.includes(product.handle)) {
     return;
   }
@@ -28,7 +28,7 @@ shopify.products.forEach((product, productIndex) => {
 
 const dump = sanityProducts.map(JSON.stringify).join(`\n`);
 
-fs.writeFile(`./export/dump.json`, dump, (err) => {
+fs.writeFile(`${__dirname}/.cache/export/dump.json`, dump, (err) => {
   if (err) {
     // eslint-disable-next-line no-console
     console.error(err);
