@@ -1,20 +1,20 @@
 {
   "name": "sanity-shopify-autofill",
-  "version": "0.0.1",
   "type": "module",
-  "description": "Converts products.json files into an opinionated Sanity schema.",
-  "main": "index.js",
-  "scripts": {
-    "fill": "node --experimental-json-modules index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "version": "0.0.1",
+  "license": "MIT",
   "author": "Dan Courtness",
+  "description": "Converts products from a Shopify catalogue into Sanity documents.",
   "keywords": [
     "sanity",
     "shopify",
     "import"
   ],
-  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "fill": "node --experimental-json-modules index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
     "fs": "^0.0.1-security"
   }

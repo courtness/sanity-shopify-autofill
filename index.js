@@ -3,11 +3,7 @@ import fs from "fs";
 import shopify from "./data/products.json";
 
 const sanityProducts = [];
-const excludedHandles = [
-  `dyson-supersonic-hair-dryer-black-nickel`,
-  `eleven-give-me-clean-hair-dry-shampoo-130g`,
-  `dyson-supersonic-hair-dryer-fuchsia-iron`
-];
+const excludedHandles = [];
 
 shopify.products.forEach((product, productIndex) => {
   if (excludedHandles.includes(product.handle)) {
