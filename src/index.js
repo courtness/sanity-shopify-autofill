@@ -4,21 +4,24 @@ exports.__esModule = true;
 
 import preflight from "~src/preflight";
 import { writeSanityDocuments } from "~src/lib/sanity-exporter.js";
-import { getShopifyProducts } from "~src/lib/shopify-importer.js";
+import { importProducts } from "~src/lib/shopify-importer.js";
 
 //
 
 global.dirname = __dirname;
 
+/**
+ * -----------------------------------------------------------------------------
+ * Fetch product data from Shopify API and load them into Sanity as documents.
+ * @return {null}
+ */
 const autofill = () => {
   preflight();
 
-  console.log(`Autofill`);
+  importProducts().then((shopifyProducts) => {
+    console.log(`[info] Imported ${shopifyProducts.length} Shopify products.`);
 
-  getShopifyProducts().then((shopifyData) => {
-    console.log(`Shopify Complete: `, shopifyData.products.length);
-
-    writeSanityDocuments(shopifyData).then((sanityData) => {
+    writeSanityDocuments(shopifyProducts).then((sanityData) => {
       console.log(`Sanity Complete: `, sanityData.length);
     });
   });

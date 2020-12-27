@@ -1,16 +1,16 @@
 import { promises as fs } from "fs";
 
-export const writeSanityDocuments = (shopifyData) => {
+export const writeSanityDocuments = (shopifyProducts) => {
   const excludedHandles = [];
   const sanityDocuments = [];
 
-  if (!shopifyData?.products?.[0]) {
+  if (!shopifyProducts?.[0]) {
     console.error(
       `Shopify data did not contain a 'products' object. Aborting.`
     );
   }
 
-  shopifyData.products.forEach((shopifyProduct) => {
+  shopifyProducts.forEach((shopifyProduct) => {
     if (excludedHandles.includes(shopifyProduct.handle)) {
       return;
     }
