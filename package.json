@@ -1,27 +1,21 @@
 {
   "name": "sanity-shopify-autofill",
   "version": "0.0.1",
-  "description": "Import tool that creates Sanity product objects from a Shopify catalogue.",
+  "type": "module",
+  "description": "Converts products.json files into an opinionated Sanity schema.",
   "main": "index.js",
   "scripts": {
+    "fill": "node --experimental-json-modules index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/courtness/sanity-shopify-autofill.git"
-  },
+  "author": "Dan Courtness",
   "keywords": [
     "sanity",
     "shopify",
-    "import",
-    "export",
-    "fill.autofill",
-    "download"
+    "import"
   ],
-  "author": "Dan Courtness",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/courtness/sanity-shopify-autofill/issues"
-  },
-  "homepage": "https://github.com/courtness/sanity-shopify-autofill#readme"
+  "dependencies": {
+    "fs": "^0.0.1-security"
+  }
 }
