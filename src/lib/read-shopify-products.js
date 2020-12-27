@@ -46,7 +46,7 @@ export const getProducts = (url) => {
 
   getProductsJSON().then((products) => {
     fs.writeFile(
-      `${globals.importDirectory}/shopify-products.json`,
+      `${global.importDirectory}/shopify-products.json`,
       JSON.stringify(products, null, 2),
       (error) => {
         if (error) {

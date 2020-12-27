@@ -3,7 +3,7 @@
     [
       "@babel/preset-env",
       {
-        "useBuiltIns": "entry"
+        "useBuiltIns": false
       }
     ]
   ],
@@ -12,7 +12,7 @@
     "@babel/plugin-proposal-export-default-from",
     "babel-plugin-root-import",
     [
-      "transform-runtime",
+      "@babel/plugin-transform-runtime",
       {
         "regenerator": true
       }
