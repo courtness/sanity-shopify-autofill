@@ -12,8 +12,8 @@
   ],
   "main": "index.js",
   "scripts": {
-    "build": "npx babel src --out-dir dist --presets=@babel/preset-env",
-    "start": "npx babel src --watch --out-dir dist --presets=@babel/preset-env",
+    "build": "npx babel src --out-dir dist",
+    "start": "npx babel src --watch --out-dir dist",
     "test": "echo \"Error: no test specified\""
   },
   "dependencies": {
@@ -32,6 +32,7 @@
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.12.10",
     "babel-eslint": "^10.1.0",
+    "babel-preset-minify": "^0.5.1",
     "babel-plugin-root-import": "^6.6.0",
     "eslint": "^7.15.0",
     "eslint-config-prettier": "^7.0.0",

@@ -1,6 +1,5 @@
 import axios from "axios";
 import { promises as fs } from "fs";
-import { getBaseShopifyURL, getShopifyPagesize } from "~src/utils";
 
 // todo : if cacheFile exists and reload is not set, return the cachefile instead
 
@@ -61,7 +60,7 @@ const getPaginatedProducts = (response) => {
     const urlParams = new URLSearchParams(paginatedLink);
     const pageInfo = urlParams.get(`page_info`);
 
-    nextURL = `${getBaseShopifyURL()}/products.json?limit=${getShopifyPagesize()}&page_info=${pageInfo}`;
+    nextURL = `${global.shopifyBaseURL}/products.json?limit=${global.shopifyPagesize}&page_info=${pageInfo}`;
   }
 
   return PaginatedProducts({
@@ -79,7 +78,7 @@ const getPaginatedProducts = (response) => {
  */
 export const importProducts = () => {
   return new Promise((resolve, reject) => {
-    if (!getBaseShopifyURL()) {
+    if (!global.shopifyBaseURL) {
       reject(`Shopify Base URL is not defined`);
     }
 
@@ -120,7 +119,7 @@ export const importProducts = () => {
     };
 
     loadPaginatedProducts(
-      `${getBaseShopifyURL()}/products.json?limit=${getShopifyPagesize()}`
+      `${global.shopifyBaseURL}/products.json?limit=${global.shopifyPagesize}`
     );
   });
 };

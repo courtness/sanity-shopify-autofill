@@ -50,9 +50,9 @@ export const setFileSystem = () => {
 /**
  * -----------------------------------------------------------------------------
  * Generate an authenticated base URL from user-supplied CLI Shopify credentials.
- * @return {string} A Shopify API URL.
+ * @return {null}
  */
-export const setBaseShopifyURL = () => {
+export const setShopifyBaseURL = () => {
   const { args } = global;
 
   if (
@@ -64,11 +64,32 @@ export const setBaseShopifyURL = () => {
     return null;
   }
 
-  return `https://${args[`shopify-key`]}:${args[`shopify-password`]}@${
-    args[`shopify-store`]
-  }.myshopify.com/admin/api/${args[`shopify-version`]}`;
+  global.shopifyBaseURL = `https://${args[`shopify-key`]}:${
+    args[`shopify-password`]
+  }@${args[`shopify-store`]}.myshopify.com/admin/api/${
+    args[`shopify-version`]
+  }`;
 };
 
+/**
+ * -----------------------------------------------------------------------------
+ * Set the pagesize either to the user-specified value or 50 by default.
+ * @return {null}
+ */
 export const setShopifyPagesize = () => {
-  return global?.args?.[`shopify-limit`] || 50;
+  global.shopifyPagesize = global?.args?.[`shopify-pagesize`] || 50;
+};
+
+/**
+ * -----------------------------------------------------------------------------
+ * Store user CLI arguments if they're not already and call the Shopify setters.
+ * @return {null}
+ */
+export const setShopify = () => {
+  if (!global?.args) {
+    storeArgs();
+  }
+
+  setShopifyBaseURL();
+  setShopifyPagesize();
 };
