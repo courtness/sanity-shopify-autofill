@@ -10,6 +10,9 @@
     "shopify",
     "import"
   ],
+  "files": [
+    "dist/**/*"
+  ],
   "main": "./dist/index.js",
   "scripts": {
     "build": "npx babel src --out-dir dist",
