@@ -60,8 +60,9 @@ export const setShopifyBaseURL = () => {
     !args?.[`shopify-password`] ||
     !args?.[`shopify-store`]
   ) {
-    console.error(`Required config params missing`);
-    return null;
+    throw new Error(
+      `Required config parameters are missing (Shopify key, password, store)`
+    );
   }
 
   global.shopifyBaseURL = `https://${args[`shopify-key`]}:${
@@ -90,6 +91,11 @@ export const setShopify = () => {
     storeArgs();
   }
 
-  setShopifyBaseURL();
-  setShopifyPagesize();
+  try {
+    setShopifyBaseURL();
+    setShopifyPagesize();
+  } catch (err) {
+    console.error(`[err]  Failed to set Shopify configuration:`);
+    console.error(`${err}\n`);
+  }
 };

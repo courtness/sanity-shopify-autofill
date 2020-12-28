@@ -79,7 +79,8 @@ const getPaginatedProducts = (response) => {
 export const importProducts = () => {
   return new Promise((resolve, reject) => {
     if (!global.shopifyBaseURL) {
-      reject(`Shopify Base URL is not defined`);
+      reject(`Shopify base URL is not defined`);
+      return;
     }
 
     const cacheFile = `${global.importDirectory}/shopify-products.json`;

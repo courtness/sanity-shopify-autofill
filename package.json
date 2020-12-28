@@ -10,11 +10,11 @@
     "shopify",
     "import"
   ],
-  "main": "index.js",
+  "main": "./dist/index.js",
   "scripts": {
     "build": "npx babel src --out-dir dist",
     "start": "npx babel src --watch --out-dir dist",
-    "test": "echo \"Error: no test specified\""
+    "test": "echo \"No test specified\""
   },
   "dependencies": {
     "axios": "^0.21.1",

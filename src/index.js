@@ -17,13 +17,24 @@ const autofill = () => {
   setFileSystem();
   setShopify();
 
-  importProducts().then((shopifyProducts) => {
-    console.log(`[info] Imported ${shopifyProducts.length} Shopify products.`);
+  if (!global?.shopifyBaseURL) {
+    console.error(`[err]  Shopify base URL unset, aborting`);
+    return;
+  }
 
-    writeSanityDocuments(shopifyProducts).then((sanityData) => {
-      console.log(`Sanity Complete: `, sanityData.length);
+  importProducts()
+    .then((shopifyProducts) => {
+      console.log(
+        `[info] Imported ${shopifyProducts.length} Shopify products.`
+      );
+
+      writeSanityDocuments(shopifyProducts).then((sanityData) => {
+        console.log(`Sanity Complete: `, sanityData.length);
+      });
+    })
+    .catch((err) => {
+      console.error(`[err]  Failed to import Shopify products: ${err}`);
     });
-  });
 };
 
 exports.autofill = autofill;
