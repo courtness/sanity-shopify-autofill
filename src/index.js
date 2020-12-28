@@ -2,11 +2,9 @@
 
 exports.__esModule = true;
 
-import preflight from "~src/preflight";
+import { setFileSystem, storeArgs } from "~src/utils";
 import { writeSanityDocuments } from "~src/lib/sanity-exporter.js";
 import { importProducts } from "~src/lib/shopify-importer.js";
-
-//
 
 global.dirname = __dirname;
 
@@ -16,7 +14,8 @@ global.dirname = __dirname;
  * @return {null}
  */
 const autofill = () => {
-  preflight();
+  storeArgs();
+  setFileSystem();
 
   importProducts().then((shopifyProducts) => {
     console.log(`[info] Imported ${shopifyProducts.length} Shopify products.`);

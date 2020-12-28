@@ -18,7 +18,8 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
-    "fs": "^0.0.1-security"
+    "fs": "^0.0.1-security",
+    "minimist": "^1.2.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",

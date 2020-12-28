@@ -1,21 +1,11 @@
 import axios from "axios";
 import { promises as fs } from "fs";
+import { getBaseShopifyURL, getShopifyPagesize } from "~src/utils";
 
 // todo : if cacheFile exists and reload is not set, return the cachefile instead
 
 //##############################################################################
-// variables
-//
-
-/** @type {Number} Pagination limit for each product GET request */
-const limit = 50;
-
-/** @type {String} URL prefix with API key / password / store name */
-let baseURL;
-
-//##############################################################################
 // classes
-//
 
 /**
  *  @class PaginatedProducts
@@ -32,33 +22,6 @@ const PaginatedProducts = ({ nextURL, products }) => {
 
 //##############################################################################
 // methods
-//
-
-/**
- * -----------------------------------------------------------------------------
- * Generate an authenticated base URL from user-supplied CLI Shopify credentials.
- * @return {null}
- */
-const setBaseURL = () => {
-  let config = {
-    version: `2020-07`
-  };
-
-  process.argv.forEach((arg) => {
-    const argSplit = arg.split(`=`);
-    const key = argSplit[0];
-    const value = argSplit[1];
-
-    config[key.toLowerCase()] = value;
-  });
-
-  if (!config?.key || !config?.password || !config?.store) {
-    console.error(`Required config params missing`);
-    return;
-  }
-
-  baseURL = `https://${config.key}:${config.password}@${config.store}.myshopify.com/admin/api/${config.version}`;
-};
 
 /**
  * -----------------------------------------------------------------------------
@@ -98,7 +61,7 @@ const getPaginatedProducts = (response) => {
     const urlParams = new URLSearchParams(paginatedLink);
     const pageInfo = urlParams.get(`page_info`);
 
-    nextURL = `${baseURL}/products.json?limit=${limit}&page_info=${pageInfo}`;
+    nextURL = `${getBaseShopifyURL()}/products.json?limit=${getShopifyPagesize()}&page_info=${pageInfo}`;
   }
 
   return PaginatedProducts({
@@ -115,12 +78,8 @@ const getPaginatedProducts = (response) => {
  * @return {Promise} Resolution return on pagination completion.
  */
 export const importProducts = () => {
-  if (!baseURL) {
-    setBaseURL();
-  }
-
   return new Promise((resolve, reject) => {
-    if (!baseURL) {
+    if (!getBaseShopifyURL()) {
       reject(`Shopify Base URL is not defined`);
     }
 
@@ -160,8 +119,8 @@ export const importProducts = () => {
       });
     };
 
-    loadPaginatedProducts(`${baseURL}/products.json?limit=${limit}`);
+    loadPaginatedProducts(
+      `${getBaseShopifyURL()}/products.json?limit=${getShopifyPagesize()}`
+    );
   });
 };
-
-export default importProducts;
