@@ -1,7 +1,7 @@
 {
   "name": "sanity-shopify-autofill",
   "type": "commonjs",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "license": "MIT",
   "author": "Dan Courtness",
   "description": "Converts products from a Shopify catalogue into Sanity documents.",
@@ -32,8 +32,8 @@
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.12.10",
     "babel-eslint": "^10.1.0",
-    "babel-preset-minify": "^0.5.1",
     "babel-plugin-root-import": "^6.6.0",
+    "babel-preset-minify": "^0.5.1",
     "eslint": "^7.15.0",
     "eslint-config-prettier": "^7.0.0",
     "eslint-plugin-import": "^2.22.1",
