@@ -1,8 +1,6 @@
 "use strict";
 
-exports.__esModule = true;
-
-import { setFileSystem, setShopify } from "~src/utils";
+import { storeArgs, setFileSystem, setShopify } from "~src/utils";
 import { writeSanityDocuments } from "~src/lib/sanity-exporter.js";
 import { importProducts } from "~src/lib/shopify-importer.js";
 
@@ -14,11 +12,8 @@ global.dirname = __dirname;
  * @return {null}
  */
 const autofill = () => {
-  setFileSystem();
-  setShopify();
-
   if (!global?.shopifyBaseURL) {
-    console.error(`[err]  Shopify base URL unset, aborting`);
+    console.error(`[err]  Shopify base URL unset, aborting\n`);
     return;
   }
 
@@ -39,4 +34,19 @@ const autofill = () => {
 
 exports.autofill = autofill;
 
-autofill();
+//
+
+const main = () => {
+  storeArgs();
+
+  if (global?.args?.mode === `cli`) {
+    setFileSystem();
+    setShopify();
+
+    autofill();
+  }
+};
+
+exports.main = main;
+
+main();
