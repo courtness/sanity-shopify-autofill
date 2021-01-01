@@ -38,8 +38,6 @@ const autofill = ({
     throw new Error(`Shopify credentials are unset`);
   }
 
-  //
-
   try {
     shopify
       .import()
