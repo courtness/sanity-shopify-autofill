@@ -93,7 +93,7 @@ class SanityAPI {
    */
   upload = (documents) => {
     if (!this.valid()) {
-      throw new Error(`Sanity Client has not been instantiated`);
+      throw new Error(`Sanity Client has not yet been instantiated`);
     }
 
     const queue = new PQueue({
