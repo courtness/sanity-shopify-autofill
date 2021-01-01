@@ -1,6 +1,8 @@
-import axios from "axios";
 import { promises as fs } from "fs";
 import sanityClient from "@sanity/client";
+
+const { default: PQueue } = require(`p-queue`);
+// import PQueue from `p-queue`;
 
 /**
  *  @class SanityAPI
@@ -9,7 +11,7 @@ import sanityClient from "@sanity/client";
  *  @property {string} password Sanity API Dataset id (e.g. production)
  */
 class SanityAPI {
-  constructor({ projectId, dataset, token }) {
+  constructor({ dataset, projectId, token }) {
     this.client = sanityClient({
       dataset,
       projectId,
@@ -94,10 +96,22 @@ class SanityAPI {
       throw new Error(`Sanity Client has not been instantiated`);
     }
 
+    const queue = new PQueue({
+      concurrency: 1,
+      interval: 1000 / 25
+    });
+
     return Promise.all(
-      documents.map((document) => this.client.createOrReplace(document))
+      documents.map((document) => {
+        queue.add(() => {
+          console.log(`[info] Uploading "${document.title}"...`);
+          this.client.createOrReplace(document);
+        })
+      });
     );
   };
+
+  // todo : Shopify webhooks
 }
 
 export default SanityAPI;
