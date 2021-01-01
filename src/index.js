@@ -1,8 +1,7 @@
 "use strict";
 
 import { setFileSystem, storeArgs } from "~src/utils";
-import { writeSanityDocuments } from "~src/lib/sanity-exporter.js";
-// import SanityAPI from "~src/lib/SanityAPI";
+import SanityAPI from "~src/lib/SanityAPI";
 import ShopifyAPI from "~src/lib/ShopifyAPI";
 
 global.dirname = __dirname;
@@ -12,25 +11,43 @@ global.dirname = __dirname;
  * Fetch product data from the Shopify API and cache a Sanity-compatible JSON.
  * @return {null}
  */
-const autofill = ({ shopifyKey, shopifyPassword, shopifyStore }) => {
+const autofill = ({
+  sanityDataset,
+  sanityProjectId,
+  sanityToken,
+  shopifyKey,
+  shopifyPassword,
+  shopifyStore
+}) => {
+  const sanity = new SanityAPI({
+    dataset: sanityDataset,
+    projectId: sanityProjectId,
+    token: sanityToken
+  });
   const shopify = new ShopifyAPI({
     key: shopifyKey,
     password: shopifyPassword,
     store: shopifyStore
   });
 
+  if (!sanity.valid()) {
+    throw new Error(`Sanity credentials are unset`);
+  }
+
+  if (!shopify.valid()) {
+    throw new Error(`Shopify credentials are unset`);
+  }
+
   //
 
   try {
     shopify
       .import()
-      .then((shopifyProducts) => {
-        console.log(
-          `[info] Imported ${shopifyProducts.length} Shopify products.`
-        );
-
-        writeSanityDocuments(shopifyProducts).then((sanityData) => {
-          console.log(`Sanity Complete: `, sanityData.length);
+      .then((products) => {
+        sanity.transform(products).then((documents) => {
+          sanity.upload(documents).then(() => {
+            console.log(`[info] Complete`);
+          });
         });
       })
       .catch((err) => {

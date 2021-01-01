@@ -20,6 +20,7 @@
     "test": "echo \"No test specified\""
   },
   "dependencies": {
+    "@sanity/client": "^2.1.0",
     "axios": "^0.21.1",
     "fs": "^0.0.1-security",
     "minimist": "^1.2.5"

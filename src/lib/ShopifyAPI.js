@@ -32,9 +32,6 @@ class ShopifyAPI {
     this.version = version;
   }
 
-  //##############################################################################
-  // methods
-
   /**
    * -----------------------------------------------------------------------------
    * Return a URL formatted with user-supplied Shopify credentials.
